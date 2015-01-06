@@ -1,0 +1,11 @@
+# Base Install and Upgrade-Charm logic
+---
+
+    - name: Install required packages.
+      apt: pkg={{ item }} state=latest update_cache=yes
+      with_items:
+          - bridge-utils
+      tags:
+        - install
+        - upgrade-charm
+
