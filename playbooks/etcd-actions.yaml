@@ -1,0 +1,23 @@
+---
+
+- name: Get ETCD Hostname
+  shell: relation-get private_address
+  register: etcd_address
+
+- name: Get ETCD port
+  shell: relation-get port
+  register: etcd_port
+
+
+# Determine if we can continue
+- set_fact:
+    etcd_joined: etcd_port.stdout != '' and etcd_address != ''
+
+
+- name: Install Upstart Template for flannel
+  template: src={{ charm_dir }}/templates/upstart.template
+            dest=/etc/init/flannel
+            mode=0644
+  when: etcd_joined == true
+
+
