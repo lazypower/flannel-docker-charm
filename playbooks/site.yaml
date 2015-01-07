@@ -6,16 +6,16 @@
   tasks:
 
     - name: Install or upgrade
-    include: install-or-upgrade.yaml
-    tags:
-      - install
+      include: install-or-upgrade.yaml
+      tags:
+        - install
 
     - name: Config Changed
-    include: config-changed.yaml
-    tags:
-      - config-changed
+      include: config-changed.yaml
+      tags:
+        - config-changed
 
     - name: stop
-    include: stop.yaml
-    tags:
-      - stop
+      include: stop.yaml
+      tags:
+        - stop
