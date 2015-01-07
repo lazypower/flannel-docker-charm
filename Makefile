@@ -6,11 +6,13 @@ virtualenv: .venv/bin/python
 .venv/bin/python:
 	sudo apt-get install python-virtualenv
 	virtualenv .venv
-	.venv/bin/pip install nose flake8 mock pyyaml charmhelpers
+	.venv/bin/pip install nose flake8 mock pyyaml charmhelpers ansible-lint
 
 lint:
-	@.venv/bin/flake8 hooks unit_tests
+	@echo Linting Charm
 	@charm proof
+	@echo Linting Ansible Routines
+	@.venv/bin/ansible-lint playbooks/*
 
 test: virtualenv
 	@echo Starting tests...
