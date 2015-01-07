@@ -10,12 +10,16 @@ description: |
   IP mappings.
 tags:
     - network
+subordinate: true
 provides:
   network:
     interface: overlay-network
 requires:
   db:
     interface: etcd
+  docker-host:
+    interface: juju-info
+    scope: container
 peers:
   overlay:
     interface: flannel-mesh
