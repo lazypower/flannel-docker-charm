@@ -1,23 +1,39 @@
 ---
 
 - name: Get ETCD Hostname
-  shell: relation-get private_address
+  shell: relation-get private-address
   register: etcd_address
 
 - name: Get ETCD port
   shell: relation-get port
   register: etcd_port
 
+- debug: msg="{{etcd_address.stdout}} {{etcd_port.stdout}}"
 
 # Determine if we can continue
 - set_fact:
-    etcd_joined: etcd_port.stdout != '' and etcd_address != ''
+    etcd_joined: "{{etcd_port.stdout  != ''}}"
 
+- debug: msg="{{etcd_joined}}"
+
+- set_fact:
+    etcd_joined: "{{etcd_address.stdout != ''}}"
+    etcd_ip: "{{etcd_address.stdout}}"
+    etcd_port: "{{etcd_port.stdout}}"
+    when: etcd_joined == "True"
+
+- debug: msg="{{ etcd_joined }}"
+
+# initialize_etcd
+- name: Initialize ETCD API with Data
+  shell: "{{ charm_dir}}/scripts/etcd_rest.py http://{{etcd_ip}}:{{etcd_port}}"
+  when: etcd_joined == "True"
 
 - name: Install Upstart Template for flannel
-  template: src={{ charm_dir }}/templates/upstart.template
-            dest=/etc/init/flannel
+  template: src={{ charm_dir }}/templates/flannel.conf
+            dest=/etc/init/flannel.conf
             mode=0644
-  when: etcd_joined == true
+  when: etcd_joined == "True"
 
+# relation-set etcd_endpoint
 
