@@ -17,6 +17,7 @@ hooks = charmhelpers.contrib.ansible.AnsibleHooks(
         'stop',
         'config-changed',
         'upgrade-charm',
+        'db-relation-changed'
     ])
 
 
