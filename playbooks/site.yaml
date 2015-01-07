@@ -9,11 +9,17 @@
       include: install-or-upgrade.yaml
       tags:
         - install
+        - upgrade-charm
 
     - name: Config Changed
       include: config-changed.yaml
       tags:
         - config-changed
+
+    - name: ETCD Relationship Actions
+      include: etcd-actions.yaml
+      tags:
+        - db-relation-changed
 
     - name: stop
       include: stop.yaml
