@@ -1,0 +1,38 @@
+# Flannel (Docker Flavored)
+
+### About Flannel
+[Flannel](https://github.com/coreos/flannel) (originally rudder) is an overlay
+network that gives a subnet to each machine for use with containers.
+
+One of the common issues when using containers in clouds is the inability to do cross
+host communication between the containers as they default to using a local bridge.
+
+flannel uses the Universal TUN/TAP device and creates an overlay network using UDP to
+encapsulate IP packets. The subnet allocation is done with the help of etcd which maintains
+the overlay subnet to host mappings.
+
+This charm uses flannel to setup an overlay network and configures docker containers
+on that host to use the overlay.
+
+## Charm Usage
+
+Flannel-docker is a subordinate charm, and is designed to be be deployed into the scope of
+a docker host, configuring its networking bridge (docker0) to use the TUN/TAP overlay
+network so docker containers can communicate cross-host. This facilitates in HA and colocated
+networking deployment.
+
+#### Deployment
+
+This is all theorhetical and will be updated later.
+
+Start by deploying ETCD to your bootstrap node (this is for cost reduction, its not uncommon for multiple etcd hosts to reside as a cluster for HA scenarios. This particular deployment is non-HA)
+
+Deploy the docker charm, and flannel-docker. Then relate docker to flannel-docker, and flannel-docker to etcd. The networking magic will reconfigure the network as a mesh overlay.
+
+    juju deploy cs:~hazmat/trusty/etcd --to 0
+    juju deploy local:trusty/docker
+    juju deploy local:trusty/flannel-docker
+    juju add-relation flannel-docker docker
+    juju add-relation flannel-docker etcd
+
+
