@@ -1,0 +1,62 @@
+---
+- set_fact:
+    etcd_joined: "{{current_relation['port'] != ''}}"
+    etcd_joined: "{{current_relation['private-address'] != ''}}"
+
+- debug: msg="{{etcd_joined}}"
+
+- set_fact:
+    etcd_ip: "{{current_relation['private-address']}}"
+    etcd_port: "{{current_relation['port']}}"
+    when: etcd_joined == "True"
+
+- debug: msg="{{ etcd_joined }}"
+
+# initialize_etcd
+- name: Initialize ETCD API with Data
+  shell: "{{ charm_dir}}/scripts/etcd_rest.py http://{{etcd_ip}}:{{etcd_port}}"
+  when: etcd_joined == "True"
+
+- name: Install Upstart Template for flannel
+  template: src={{ charm_dir }}/templates/flannel.conf
+            dest=/etc/init/flannel.conf
+            mode=0644
+  when: etcd_joined == "True"
+
+- name: Cycle Flannel Service
+  service: name=flannel state=restarted enabled=yes
+  when: etcd_joined == "True"
+
+# I dont understand why this is here - set on line 157 of hooks.py in flannel charm
+# relation-set etcd_endpoint
+- name: Send etcd_endpoint data
+  shell: "relation-set etcd_endpoint='http://{{ etcd_ip }}:{{ etcd_port }}'"
+  when: etcd_joined == "True"
+
+- debug: msg={{current_relation['port']}}
+
+# TODO send data so we can take down docker bridge and bring it back up
+# under flannel directed networking config
+
+- name: Find Docker-Host relation-id
+  shell: relation-ids docker-host
+  register: docker_host_rel_id
+
+# Read data from flannel config
+- name: Read Flannel Subnet
+  shell: cat /run/flannel/subnet.env | grep FLANNEL_SUBNET | cut -f2 -d"="
+  register: flannel_subnet
+
+- name: Read Flannel MTU
+  shell: cat /run/flannel/subnet.env | grep FLANNEL_MTU | cut -f2 -d"="
+  register: flannel_mtu
+
+- set_fact:
+    host_rel_id: "{{ docker_host_rel_id.stdout }}"
+    flannel_mtu: "{{ flannel_mtu.stdout }}"
+    flannel_subnet: "{{ flannel_subnet.stdout }}"
+
+
+# Appears we dont need the unit name
+- name: Send Data to Docker Host for bridge configuration
+  shell: relation-set -r {{ host_rel_id }} flannel-subnet={{ flannel_subnet  }} flannel-mtu={{ flannel_mtu }}
