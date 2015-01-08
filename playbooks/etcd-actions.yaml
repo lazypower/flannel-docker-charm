@@ -1,39 +1,20 @@
 ---
 
-- name: Get ETCD Hostname
-  shell: relation-get private-address
-  register: etcd_address
+# This file is mainly responsible for branching logic as we grow the
+# flannel functionality of docker with multi ETCD hosts, and what is
+# necessary in reconfiguring peering/hosts with this data.
 
-- name: Get ETCD port
-  shell: relation-get port
-  register: etcd_port
+- name: Detect if already running a VXLan
+  stat: path=/run/flannel/subnet.env
+  register: flannel_configured
 
-- debug: msg="{{etcd_address.stdout}} {{etcd_port.stdout}}"
+- debug: msg="{{ flannel_configured.stat.exists }}"
 
-# Determine if we can continue
-- set_fact:
-    etcd_joined: "{{etcd_port.stdout  != ''}}"
+# Only continue if we aren't already configured
+# TODO detect changes, and multiple hosts and take the
+# appropriate action
 
-- debug: msg="{{etcd_joined}}"
-
-- set_fact:
-    etcd_joined: "{{etcd_address.stdout != ''}}"
-    etcd_ip: "{{etcd_address.stdout}}"
-    etcd_port: "{{etcd_port.stdout}}"
-    when: etcd_joined == "True"
-
-- debug: msg="{{ etcd_joined }}"
-
-# initialize_etcd
-- name: Initialize ETCD API with Data
-  shell: "{{ charm_dir}}/scripts/etcd_rest.py http://{{etcd_ip}}:{{etcd_port}}"
-  when: etcd_joined == "True"
-
-- name: Install Upstart Template for flannel
-  template: src={{ charm_dir }}/templates/flannel.conf
-            dest=/etc/init/flannel.conf
-            mode=0644
-  when: etcd_joined == "True"
-
-# relation-set etcd_endpoint
+- name: Configure Flannel Networking
+  include: flannel-configuration.yaml
+  when: "{{ flannel_configured.stat.exists }} != False"
 
