@@ -38,8 +38,8 @@
 # TODO send data so we can take down docker bridge and bring it back up
 # under flannel directed networking config
 
-- name: Find Docker-Host relation-id
-  shell: relation-ids docker-host
+- name: Find Docker-Host network relation-id
+  shell: relation-ids network
   register: docker_host_rel_id
 
 # Read data from flannel config
