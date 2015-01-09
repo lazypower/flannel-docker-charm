@@ -14,6 +14,7 @@ subordinate: true
 provides:
   network:
     interface: overlay-network
+    scope: container
 requires:
   db:
     interface: etcd
