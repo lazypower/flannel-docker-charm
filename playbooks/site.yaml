@@ -29,14 +29,14 @@
         - network-relation-changed
 
     - set_fact:
-        network_is_configured: "{{ network_configured.stat.exists }}"
+        network_is_configured: "{{ flannel_configured.stat.exists }}"
       tags:
         - db-relation-changed
         - network-relation-changed
 
     - name: Configure Flannel Networking
       include: flannel-configuration.yaml
-      when: "network_is_configured not is True"
+      when: "{{ network_is_configured != True }}"
       tags:
         - db-relation-changed
 
