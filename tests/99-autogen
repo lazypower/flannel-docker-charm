@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+import amulet
+import unittest
+
+
+class TestDeployment(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.deployment = amulet.Deployment(series='trusty')
+
+        cls.deployment.add('docker', 'local:trusty/docker')
+        cls.deployment.add('flannel-docker')
+        cls.deployment.add('etcd', 'cs:~hazmat/trusty/etcd')
+
+        cls.deployment.configure('docker', {})
+        cls.deployment.configure('etcd', {})
+        cls.deployment.configure('flannel-docker', {})
+
+        cls.deployment.relate('flannel-docker:docker-host', 'docker:juju-info')
+        #TODO: Cleanup and ensure the relationship ordering is not a factor
+        cls.deployment.relate('flannel-docker:network', 'docker:network')
+        cls.deployment.relate('flannel-docker:db', 'etcd:client')
+
+        try:
+            cls.deployment.setup(timeout=900)
+            cls.deployment.sentry.wait()
+        except amulet.helpers.TimeoutError:
+            msg = "Environment wasn't stood up in time"
+            amulet.raise_status(amulet.SKIP, msg)
+        except:
+            raise
+
+    def test_case(self):
+        pass
+
+
+if __name__ == '__main__':
+    unittest.main()
