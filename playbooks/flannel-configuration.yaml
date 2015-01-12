@@ -3,8 +3,6 @@
   shell: relation-get port
   register: port
 
-- debug: msg="PORT {{ port }}"
-
 - name: Grab the private-address
   shell: relation-get private-address
   register: private_address
@@ -13,22 +11,15 @@
     etcd_port: "{{ port.stdout }}"
     etcd_ip: "{{ private_address.stdout }}"
 
-- debug: msg="{{ etcd_port }}"
-- debug: msg="{{ etcd_ip }}"
-
 # Note: removed teh etcd_ip null check because private-address is always
 # available on relationships - its passed implicity.
 - set_fact:
     etcd_joined: "{{ etcd_port != ''}}"
 
-- debug: msg="{{etcd_joined}}"
-
 # initialize_etcd
 - name: Initialize ETCD API with Data
   shell: "{{ charm_dir}}/scripts/etcd_rest.py http://{{etcd_ip}}:{{etcd_port}}"
   when: etcd_joined == "True"
-
-- debug: msg="http://{{etcd_ip}}:{{etcd_port}}"
 
 - name: Install Upstart Template for flannel
   template: src={{ charm_dir }}/templates/flannel.conf
@@ -45,7 +36,6 @@
 - name: Send etcd_endpoint data
   shell: "relation-set etcd_endpoint='http://{{ etcd_ip }}:{{ etcd_port }}'"
   when: etcd_joined == "True"
-
 
 - name: Call network Relation Changed
   include: network-relation-changed.yaml

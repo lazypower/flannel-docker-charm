@@ -16,12 +16,33 @@
       tags:
         - config-changed
 
-    - name: ETCD Relationship Actions
-      include: etcd-actions.yaml
-      tags:
-        - db-relation-changed
-
     - name: stop
       include: stop.yaml
       tags:
         - stop
+
+    - name: Detect if already running a VXLan
+      stat: path=/run/flannel/subnet.env
+      register: flannel_configured
+      tags:
+        - db-relation-changed
+        - network-relation-changed
+
+    - set_fact:
+        network_is_configured: "{{ network_configured.stat.exists }}"
+      tags:
+        - db-relation-changed
+        - network-relation-changed
+
+    - name: Configure Flannel Networking
+      include: flannel-configuration.yaml
+      when: "network_is_configured not is True"
+      tags:
+        - db-relation-changed
+
+    - name: network changed
+      include: network-relation-changed.yaml
+      when: network_is_configured
+      tags:
+        - network-relation-changed
+        
