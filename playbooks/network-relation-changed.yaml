@@ -1,0 +1,39 @@
+---
+
+# TODO: Investigate with multiple docker hosts and ensure we have
+# the proper relationship id.
+
+# Note: this is necessary when being called from
+# network-relation-changed, not from db-relation-joined.
+- name: Detect if already running a VXLan
+  stat: path=/run/flannel/subnet.env
+  register: network_configured
+
+- set_fact:
+    network_configured: "{{ network_configured.stat.exists }}"
+
+- name: Find Docker-Host network relation-id
+  shell: relation-ids network
+  register: docker_host_rel_id
+  when: network_configured
+
+# Read data from flannel config
+- name: Read Flannel Subnet
+  shell: cat /run/flannel/subnet.env | grep FLANNEL_SUBNET | cut -f2 -d"="
+  register: flannel_subnet
+  when: network_configured
+
+- name: Read Flannel MTU
+  shell: cat /run/flannel/subnet.env | grep FLANNEL_MTU | cut -f2 -d"="
+  register: flannel_mtu
+  when: network_configured
+
+- set_fact:
+    host_rel_id: "{{ docker_host_rel_id.stdout }}"
+    flannel_mtu: "{{ flannel_mtu.stdout }}"
+    flannel_subnet: "{{ flannel_subnet.stdout }}"
+
+- name: Send Data to Docker Host for bridge configuration
+  shell: relation-set -r {{ host_rel_id }} flannel-subnet={{ flannel_subnet  }} flannel-mtu={{ flannel_mtu }}
+  when: network_configured
+
