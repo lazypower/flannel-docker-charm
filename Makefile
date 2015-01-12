@@ -14,10 +14,6 @@ lint:
 	@echo Linting Ansible Routines
 	@.venv/bin/ansible-lint playbooks/*
 
-test: virtualenv
-	@echo Starting tests...
-	@CHARM_DIR=. PYTHONPATH=./hooks .venv/bin/nosetests --nologcapture unit_tests
-
 clean:
 	rm -rf .venv
 	find -name *.pyc -delete
