@@ -3,9 +3,9 @@ include: ['_pages']
 relative_permalinks: false
 timezone: America/New_York
 encoding: utf-8
-product: Kubrick Documentation
-keywords: Charm Documentation, Scaffolding
-analytics_id: UA-XXXX
-repository: chuckbutler/kubrick-documentation-scaffolding
+product: Flannel
+keywords: Container Networking, Flannel, Juju, Juju Container Networking
+analytics_id: UA-51016932-3
+repository: chuckbutler/flannel-docker-charm
 forkme_enabled: true
-url: http://localhost:4000
+url: http://chuckbutler.github.io/flannel-docker-charm/
