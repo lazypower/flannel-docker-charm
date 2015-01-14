@@ -1,9 +1,0 @@
----
-# TODO: MOAR CLEANUP
-- debug: msg="Stopping..."
-
-- name: Remove installed packages.
-  apt: pkg={{ item }} state=absent update_cache=no
-  with_items:
-      - bridge-utils
-
