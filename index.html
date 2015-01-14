@@ -1,7 +1,19 @@
 ---
 layout: default
-title: Kubrick Scaffolding Overview
+title: Flannel Docker Charm
 ---
-<h2>Docs dont have to be a chore</h2>
+<h2>Docker Flavored Flannel</h2>
 
-<p>We’re excited that you are interested in {{ site.product }} based Site Generation with the Kubrick Scaffolding. This suite of pages should get you moving quickly and effectively with the scaffolding and have you documenting your project in no time!</p>
+<p>We’re excited that you are interested in {{ site.product }}. The Flannel Docker charm compliments the core-docker charm by providing a UDP private network for your containers to communicate cross host. This will be a cornerstone project in the evolving container provider story as it moves forward and provide a viable option for networking in public clouds.</p>
+
+<p>To get started, check out the User Docs. If you're interested in Contributing or filing a bug we have instructions under the Developer Docs.</p>
+
+<h2> About the Flannel Docker Charm </h2>
+
+<p>The Flannel-Docker charm is a subordinate unit that deploys *onto* the containers you relate to the <code>docker-host</code> relationship. This will allow flannel to co-locate its binaries with the Docker service to enable cross-host networking via a <a href="http://en.wikipedia.org/wiki/TUN/TAP">TUN/TAP</a> Device. Or more commonly known as TCP over UDP networking.</p>
+
+<p>The Flannel service is originally developed by CoreOS. The Flannel-Docker charm encapsulates the knowledge of getting started with Flannel and brings it to fit inside the Juju Ecosystem of orchestrating Docker and its containers.</p>
+
+<h2> About the Flannel Service </h2>
+
+<p>flannel (originally rudder) is an overlay network that gives a subnet to each machine for use with Kubernetes. In Kubernetes every machine in the cluster is assigned a full subnet. The machine A and B might have 10.0.1.0/24 and 10.0.2.0/24 respectively.</p>
