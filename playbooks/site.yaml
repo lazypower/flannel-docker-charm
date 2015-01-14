@@ -45,4 +45,4 @@
       when: network_is_configured
       tags:
         - network-relation-changed
-        
+

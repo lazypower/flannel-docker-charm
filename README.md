@@ -36,3 +36,21 @@ Deploy the docker charm, and flannel-docker. Then relate docker to flannel-docke
     juju add-relation flannel-docker etcd
 
 
+## Known Limitations
+
+This charm does not currently work with the Juju local provider. The combination
+of apparmor and LXC prevent the flannel function from working.  Deploy this
+charm to a cloud environment.
+
+The included binary files are amd64 only. The flannel code is compiled and will
+not run on architectures other than amd64 (x86_64).  Use the `constraints` flag
+with the `juju` command to specify the proper architecture from your cl2.00oud
+environment.
+
+# Contact information
+
+Kapil Thangavelu and Charles Butler
+
+## Flannel information  
+
+- [Flannel on GitHub](https://github.com/coreos/flannel)
