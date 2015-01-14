@@ -40,16 +40,16 @@ class TestDeployment(unittest.TestCase):
             amulet.raise_status(amulet.FAIL, msg)
         except:
             raise
-        self.flannel_unit = self.deployment.sentry.unit['flannel-docker/0']
+        
         self.docker_unit = self.deployment.sentry.unit['docker/0']
         self.etcd_unit = self.deployment.sentry.unit['etcd/0']
 
     def test_flannel_binary(self):
         """ Test to see if flannel is installed correctly. """
         command = 'flannel --version'
-        # Run the command to see if flannel is installed.
-        output, code = self.flannel_unit.run(command)
-        print(output)
+        # Run the command to see if flannel is installed on the docker unit.
+        output, code = self.docker_unit.run(command)
+        print(command, output)
         if code != 0:
             message = 'The flannel binary is not installed.'
             amulet.raise_status(amulet.FAIL, msg=message)
@@ -58,9 +58,9 @@ class TestDeployment(unittest.TestCase):
     def test_flannel_running(self):
         """ Test to see if flannel is running correctly. """
         command = 'sudo service flannel status'
-        # Run the command to see if flannel is running.
-        output, code = self.flannel_unit.run(command)
-        print(output)
+        # Run the command to see if flannel is running on the docker unit.
+        output, code = self.docker_unit.run(command)
+        print(command, output)
         if code != 0:
             message = 'The flannel process is not in correct status.'
             amulet.raise_status(amulet.FAIL, msg=message)
@@ -69,11 +69,12 @@ class TestDeployment(unittest.TestCase):
     def test_flannel_config(self):
         """ Test the flannel configuration. """
         flannel_config_file = '/etc/init/flannel.conf'
-        flannel_config = self.flannel_unit.file_contents(flannel_config_file)
+        # Get the flannel configuration file on the docker unit.
+        flannel_config = self.docker_unit.file_contents(flannel_config_file)
         etcd_public_address = self.etcd_unit.info['public-address']
         print('etcd public address:', etcd_public_address)
         # Must get the etcd relation to get the relation information.
-        etcd_relation = self.etcd_unit.relation('client', 'flannel:db')
+        etcd_relation = self.etcd_unit.relation('client', 'flannel-docker:db')
         etcd_private_address = etcd_relation['private-address']
         print('etcd private address:', etcd_private_address)
         etcd_port = etcd_relation['port']
@@ -88,7 +89,7 @@ class TestDeployment(unittest.TestCase):
             print('The flannel configuration had correct etcd information.')
         else:
             print(flannel_config)
-            message = 'Flannel did not have the correct ectd information.'
+            message = 'Flannel did not have the correct etcd information.'
             amulet.raise_status(amulet.FAIL, msg=message)
 
 
