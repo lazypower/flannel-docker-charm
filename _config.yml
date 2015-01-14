@@ -8,4 +8,4 @@ keywords: Container Networking, Flannel, Juju, Juju Container Networking
 analytics_id: UA-51016932-3
 repository: chuckbutler/flannel-docker-charm
 forkme_enabled: true
-url: http://chuckbutler.github.io/flannel-docker-charm
+url: http://chuckbutler.github.io/flannel-docker-charm/
