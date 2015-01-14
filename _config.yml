@@ -1,0 +1,11 @@
+keep_files: ['css', 'js']
+include: ['_pages']
+relative_permalinks: false
+timezone: America/New_York
+encoding: utf-8
+product: Kubrick Documentation
+keywords: Charm Documentation, Scaffolding
+analytics_id: UA-XXXX
+repository: chuckbutler/kubrick-documentation-scaffolding
+forkme_enabled: true
+url: http://localhost:4000

@@ -1,0 +1,307 @@
+<!doctype html>
+<!--[if IE 7 ]>    <html lang="en-gb" class="isie ie7 oldie no-js"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-gb" class="isie ie8 oldie no-js"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-gb" class="isie ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en-gb" class="no-js"> <!--<![endif]-->
+
+<head>
+  <title>Juju Charm Documentation for Docker</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="keywords" content="juju, juju charms, docker" />
+  <meta name="description" content="Charm Documentation for Docker" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <!-- this styles only adds some repairs on idevices  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google fonts - witch you want to use - (rest you can just remove) -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Dancing+Script:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,100,100italic,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <!-- ######### CSS STYLES ######### -->
+
+  <link rel="stylesheet" href="http://localhost:4000/css/reset.css" type="text/css" />
+  <link rel="stylesheet" href="http://localhost:4000/css/style.css" type="text/css" />
+
+  <!-- font awesome icons -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css">
+
+  <!-- simple line icons -->
+  <link rel="stylesheet" type="text/css" href="http://localhost:4000/css/simpleline-icons/simple-line-icons.css" media="screen" />
+
+  <!-- responsive devices styles -->
+  <link rel="stylesheet" media="screen" href="http://localhost:4000/css/responsive-leyouts.css" type="text/css" />
+
+  <!-- shortcodes -->
+  <link rel="stylesheet" media="screen" href="http://localhost:4000/css/shortcodes.css" type="text/css" />
+
+  <!-- AutoAnchor -->
+  <link rel="stylesheet" media="screen" href="http://localhost:4000/css/autoanchor.css" type="text/css" />
+
+  <!-- just remove the below comments witch color skin you want to use -->
+  <link rel="stylesheet" href="http://localhost:4000/css/colors/blue.css" />
+
+
+  <!-- mega menu -->
+  <link href="http://localhost:4000/js/mainmenu/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/js/mainmenu/menu.css" rel="stylesheet">
+
+  
+     <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-51016932-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  
+
+</head>
+
+<body>
+
+  <div class="site_wrapper">
+
+    <header class="header innerpages">
+
+      <div class="container">
+
+        <!-- Logo -->
+        <div class="logo"><a href="index.html" id="logo"></a></div>
+        <!-- Fork Me Github Ribbon -->
+<a href="https://github.com/chuckbutler/docker-charm"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/8b6b8ccc6da3aa5722903da7b58eb5ab1081adee/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_orange_ff7600.png"></a>
+
+        <!-- Navigation Menu -->
+        <nav class="menu_main">
+          <div class="navbar yamm navbar-default">
+            <div class="container">
+              <div class="navbar-header">
+                <div class="navbar-toggle .navbar-collapse .pull-right " data-toggle="collapse" data-target="#navbar-collapse-1"  > <span>Menu</span>
+                  <button type="button" > <i class="fa fa-bars"></i></button>
+                </div>
+              </div>
+              <div id="navbar-collapse-1" class="navbar-collapse collapse pull-right">
+                <ul class="nav navbar-nav">
+                  <li class="dropdown yamm-fw"><a href="http://localhost:4000" class="active">Home</a></li>
+                  <li class="dropdown yamm-fw"> <a href="#" data-toggle="dropdown" class="dropdown-toggle">Juju Charms</a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <div class="yamm-content">
+                          <div class="row">
+
+                            <ul class="col-sm-6 col-md-4 list-unstyled two">
+                              <li>
+                                <p>Juju Solutions</p>
+                              </li>
+                              
+                              <li><a href="http://jujucharms.com"><i class="fa fa-angle-right"></i>Main</a></li>
+                              
+                              <li><a href="https://jujucharms.com/solutions"><i class="fa fa-angle-right"></i>Solutions</a></li>
+                              
+                              <li><a href="https://demo.jujucharms.com/"><i class="fa fa-angle-right"></i>Demo</a></li>
+                              
+                              <li><a href="https://jujucharms.com/about"><i class="fa fa-angle-right"></i>About</a></li>
+                              
+                              <li><a href="https://jujucharms.com/about/features"><i class="fa fa-angle-right"></i>Features</a></li>
+                              
+                              <li><a href="https://jujucharms.com/community"><i class="fa fa-angle-right"></i>Community</a></li>
+                              
+                              <li><a href="https://jujucharms.com/docs/"><i class="fa fa-angle-right"></i>Docs</a></li>
+                              
+                              <li><a href="https://jujucharms.com/get-started"><i class="fa fa-angle-right"></i>Get started</a></li>
+                              
+                            </ul>
+
+                            <ul class="col-sm-6 col-md-4 list-unstyled two">
+                              <li>
+                                <p>User Documentation</p>
+                              </li>
+                              
+                                <li><a href="https://jujucharms.com/docs/getting-started"><i class="fa fa-angle-right"></i>Getting started</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/charms"><i class="fa fa-angle-right"></i>Using Juju</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/charms-deploying"><i class="fa fa-angle-right"></i>Deploying services</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/charms-constraints"><i class="fa fa-angle-right"></i>Using constraints</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/charms-config"><i class="fa fa-angle-right"></i>Service configuration</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/charms-relations"><i class="fa fa-angle-right"></i>Service relationships</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/charms-destroy"><i class="fa fa-angle-right"></i>Destroying services</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/charms-environments"><i class="fa fa-angle-right"></i>Managing environments</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/charms-bundles"><i class="fa fa-angle-right"></i>Using bundles</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/howto-gui-management"><i class="fa fa-angle-right"></i>Manage Juju with the GUI</a></li>
+                              
+                            </ul>
+
+                            <ul class="col-sm-6 col-md-4 list-unstyled two">
+                              <li>
+                                <p>Developer Documentation</p>
+                              </li>
+                              
+                                <li><a href="https://jujucharms.com/docs/authors-intro"><i class="fa fa-angle-right"></i>Getting started</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/authors-charm-components"><i class="fa fa-angle-right"></i>Components of a charm</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/authors-charm-hooks"><i class="fa fa-angle-right"></i>Charm hooks</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/authors-charm-config"><i class="fa fa-angle-right"></i>Config.yaml</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/authors-charm-writing"><i class="fa fa-angle-right"></i>Charm walkthrough</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/authors-hook-errors"><i class="fa fa-angle-right"></i>Hook Errors</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/authors-hook-debug"><i class="fa fa-angle-right"></i>Hook Debugging</a></li>
+                              
+                                <li><a href="https://jujucharms.com/docs/authors-testing"><i class="fa fa-angle-right"></i>Charm Testing</a></li>
+                              
+                            </ul>
+
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Docker</a>
+                    <ul class="dropdown-menu" role="menu">
+                      
+                        <li><a href="https://www.docker.com/"><i class="fa fa-angle-right"></i>Home</a></li>
+                      
+                        <li><a href="https://docs.docker.com/userguide/"><i class="fa fa-angle-right"></i>User Guide</a></li>
+                      
+                        <li><a href="https://docs.docker.com/userguide/#getting-help"><i class="fa fa-angle-right"></i>Getting Help</a></li>
+                      
+                    </ul>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+          </div>
+
+        </nav><!-- end Navigation Menu -->
+
+      </div>
+    </header>
+
+
+    <div class="clearfix margin_top10"></div>
+
+    <div class="page_title2">
+      <div class="container">
+        
+        <h1>Doc Navigation</h1>
+        <div class="pagenation">
+            &nbsp;<a href="http://localhost:4000">Home</a>
+            
+            <i>/</i> <a href="http://localhost:4000/meta/navigation.html">Doc Navigation</a>
+        </div>
+
+      </div>
+    </div><!-- end page title -->
+
+    <div class="clearfix"></div>
+
+    <div class="content_fullwidth less2">
+      <div class="container">
+
+        <!-- left sidebar starts -->
+        <div class="left_sidebar">
+                    <div class="sidebar_widget">
+            <div class="sidebar_title"><h4>User <i>Docs</i></h4></div>
+            <ul class="arrows_list1">
+              
+                <li><a href="http://localhost:4000/user/getting-started.html"><i class="fa fa-angle-right"></i> Getting Started</a></li>
+              
+                <li><a href="http://localhost:4000/user/configuration.html"><i class="fa fa-angle-right"></i> Configuration</a></li>
+              
+                <li><a href="http://localhost:4000/user/deploying-containers.html"><i class="fa fa-angle-right"></i> Deploying Containers</a></li>
+              
+            </ul>
+            <ul class="arrows_list1">
+            </ul>
+          </div><!-- end section -->
+
+          <div class="clearfix margin_top4"></div>
+
+          <div class="sidebar_widget">
+
+            <div class="sidebar_title"><h4>Developer <i>Docs</i></h4></div>
+            <ul class="arrows_list1">
+            
+                <li><a href="http://localhost:4000/dev/contributing.html"><i class="fa fa-angle-right"></i> Contributing</a></li>
+            
+                <li><a href="http://localhost:4000/dev/ansible-patterns.html"><i class="fa fa-angle-right"></i> Ansible Patterns</a></li>
+            
+            </ul>
+          </div><!-- end section -->
+
+          <div class="clearfix margin_top4"></div>
+
+
+
+        </div><!-- end left sidebar -->
+
+        <div class="content_right">
+          
+
+        </div><!-- end content right side -->
+
+      </div>
+    </div><!-- end content area -->
+
+    <div class="clearfix marb12"></div>
+
+<!-- place holder
+    <footer class="footer">
+
+    </footer>
+-->
+
+    <a href="#" class="scrollup">Scroll</a><!-- end scroll to top of the page-->
+
+
+  </div>
+
+  <!-- ######### JS FILES ######### -->
+  <!-- get jQuery from the google apis -->
+  <script type="text/javascript" src="http://localhost:4000/js/universal/jquery.js"></script>
+
+  <!-- mega menu -->
+  <script src="http://localhost:4000/js/mainmenu/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/mainmenu/customeUI.js"></script>
+
+  <!-- scroll up -->
+  <script src="http://localhost:4000/js/scrolltotop/totop.js" type="text/javascript"></script>
+
+  <!-- sticky menu -->
+  <script type="text/javascript" src="http://localhost:4000/js/mainmenu/sticky-main.js"></script>
+  <script type="text/javascript" src="http://localhost:4000/js/mainmenu/modernizr.custom.75180.js"></script>
+
+  <!-- Auto Anchor -->
+  <script type="text/javascript" src="http://localhost:4000/js/universal/custom.js"></script>
+
+
+
+  </body>
+  </html>

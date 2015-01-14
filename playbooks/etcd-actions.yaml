@@ -1,0 +1,20 @@
+---
+
+# This file is mainly responsible for branching logic as we grow the
+# flannel functionality of docker with multi ETCD hosts, and what is
+# necessary in reconfiguring peering/hosts with this data.
+
+- name: Detect if already running a VXLan
+  stat: path=/run/flannel/subnet.env
+  register: flannel_configured
+
+- debug: msg="{{ flannel_configured.stat.exists }}"
+
+# Only continue if we aren't already configured
+# TODO detect changes, and multiple hosts and take the
+# appropriate action
+
+- name: Configure Flannel Networking
+  include: flannel-configuration.yaml
+  when: "{{ flannel_configured.stat.exists }} == False"
+

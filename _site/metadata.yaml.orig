@@ -1,0 +1,23 @@
+name: docker
+summary: Deploys Docker Engine, a lightweight runtime and packaging tool.
+maintainer: Charles Butler <charles.butler@ubuntu.com>
+description: |
+<<<<<<< HEAD
+ Deploys Docker Engine, a portable, lightweight runtime and packaging tool.
+tags:
+  - ops
+  - application_development
+subordinate: false
+provides:
+  docker-containers:
+    interface: containers
+requires:
+  network:
+    interface: overlay-network
+=======
+  Docker is an open platform for developers and sysadmins to build, ship, and 
+  run distributed applications.
+tags:
+  - ops
+subordinate: false
+>>>>>>> 24673534653df5f44858a47f8ebe2d9266af6dc5

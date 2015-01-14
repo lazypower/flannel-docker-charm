@@ -1,0 +1,48 @@
+# About the layout of the charm:
+# The site playbook controls global scope of the charm. Sub-Playbooks control hook context and
+# task concerns
+
+- hosts: all
+  tasks:
+
+    - name: Install or upgrade
+      include: install-or-upgrade.yaml
+      tags:
+        - install
+        - upgrade-charm
+
+    - name: Config Changed
+      include: config-changed.yaml
+      tags:
+        - config-changed
+
+    - name: stop
+      include: stop.yaml
+      tags:
+        - stop
+
+    - name: Detect if already running a VXLan
+      stat: path=/run/flannel/subnet.env
+      register: flannel_configured
+      tags:
+        - db-relation-changed
+        - network-relation-changed
+
+    - set_fact:
+        network_is_configured: "{{ flannel_configured.stat.exists }}"
+      tags:
+        - db-relation-changed
+        - network-relation-changed
+
+    - name: Configure Flannel Networking
+      include: flannel-configuration.yaml
+      when: "{{ network_is_configured != True }}"
+      tags:
+        - db-relation-changed
+
+    - name: network changed
+      include: network-relation-changed.yaml
+      when: network_is_configured
+      tags:
+        - network-relation-changed
+
