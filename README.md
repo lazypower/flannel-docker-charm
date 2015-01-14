@@ -14,6 +14,8 @@ the overlay subnet to host mappings.
 This charm uses flannel to setup an overlay network and configures docker containers
 on that host to use the overlay.
 
+> **NOTE!** For up to date, and complete documentation - please see the [Charm Documentation](http://chuckbutler.github.io/flannel-docker-charm/) Site.
+
 ## Charm Usage
 
 Flannel-docker is a subordinate charm, and is designed to be be deployed into the scope of
@@ -23,8 +25,6 @@ networking deployment.
 
 #### Deployment
 
-This is all theorhetical and will be updated later.
-
 Start by deploying ETCD to your bootstrap node (this is for cost reduction, its not uncommon for multiple etcd hosts to reside as a cluster for HA scenarios. This particular deployment is non-HA)
 
 Deploy the docker charm, and flannel-docker. Then relate docker to flannel-docker, and flannel-docker to etcd. The networking magic will reconfigure the network as a mesh overlay.
@@ -32,9 +32,9 @@ Deploy the docker charm, and flannel-docker. Then relate docker to flannel-docke
     juju deploy cs:~hazmat/trusty/etcd --to 0
     juju deploy local:trusty/docker
     juju deploy local:trusty/flannel-docker
-    juju add-relation flannel-docker docker
-    juju add-relation flannel-docker etcd
-
+    juju add-relation flannel-docker:docker-host docker:juju-info
+    juju add-relation flannel-docker:network docker:network
+    juju add-relation flannel-docker:db etcd:client
 
 ## Known Limitations
 
@@ -44,13 +44,16 @@ charm to a cloud environment.
 
 The included binary files are amd64 only. The flannel code is compiled and will
 not run on architectures other than amd64 (x86_64).  Use the `constraints` flag
-with the `juju` command to specify the proper architecture from your cl2.00oud
-environment.
+with the `juju` command to specify the proper architecture from your cloud environment.
 
 # Contact information
 
-Kapil Thangavelu and Charles Butler
+The Flannel-Docker subordinate is heavily based on the Flannel charm produced by Kapil Thangavelu
 
-## Flannel information  
+- Maintainer: Charles Butler &lt;charles.butler@ubuntu.com&gt;
+
+## Flannel information
 
 - [Flannel on GitHub](https://github.com/coreos/flannel)
+- [Charm Issue Tracker](https://github.com/chuckbutler/flannel-docker-charm/issues)
+- [Charm Documentation](http://chuckbutler.github.io/flannel-docker-charm/)
