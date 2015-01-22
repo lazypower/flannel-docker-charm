@@ -28,7 +28,6 @@ class TestDeployment(unittest.TestCase):
         self.deployment.configure('flannel-docker', {})
 
         self.deployment.relate('flannel-docker:docker-host', 'docker:juju-info')
-        #TODO: Cleanup and ensure the relationship ordering is not a factor
         self.deployment.relate('flannel-docker:network', 'docker:network')
         self.deployment.relate('flannel-docker:db', 'etcd:client')
 
@@ -40,7 +39,7 @@ class TestDeployment(unittest.TestCase):
             amulet.raise_status(amulet.FAIL, msg)
         except:
             raise
-        
+
         self.docker_unit = self.deployment.sentry.unit['docker/0']
         self.etcd_unit = self.deployment.sentry.unit['etcd/0']
 

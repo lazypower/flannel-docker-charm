@@ -1,8 +1,5 @@
 ---
 
-# TODO: Investigate with multiple docker hosts and ensure we have
-# the proper relationship id.
-
 # Note: this is necessary when being called from
 # network-relation-changed, not from db-relation-joined.
 
@@ -26,5 +23,4 @@
 
 - name: Send Data to Docker Host for bridge configuration
   shell: relation-set -r {{ host_rel_id }} flannel-subnet={{ flannel_subnet  }} flannel-mtu={{ flannel_mtu }}
-
-
+  when: host_rel_id != ""
