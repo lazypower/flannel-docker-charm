@@ -26,5 +26,4 @@
 
 - name: Send Data to Docker Host for bridge configuration
   shell: relation-set -r {{ host_rel_id }} flannel-subnet={{ flannel_subnet  }} flannel-mtu={{ flannel_mtu }}
-
-
+  when: host_rel_id != ""
