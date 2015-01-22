@@ -1,8 +1,5 @@
 ---
 
-# TODO: Investigate with multiple docker hosts and ensure we have
-# the proper relationship id.
-
 # Note: this is necessary when being called from
 # network-relation-changed, not from db-relation-joined.
 
