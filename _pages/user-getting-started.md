@@ -31,8 +31,14 @@ The Flannel-Docker charm will be in varying states in the master branch of it’
     mkdir -p ~/charms/trusty
     export JUJU_REPOSITORY=$HOME/charms
     git clone https://github.com/chuckbutler/docker-charm.git ~/charms/trusty/docker
+    git clone https://github.com/chuckbutler/flannel-docker-charm.git ~/charms/trusty/flannel-docker
     juju deploy local:trusty/docker
+    juju deploy local:trusty/flannel-docker
     juju deploy cs:~hazmat/trusty/etcd
+    juju add-relation etcd:client flannel-docker:db
+    juju add-relation flannel-docker:docker-host docker:juju-info
+    juju add-relation flannel-docker:network docker:network
+
 
 # Known Limitations
 
