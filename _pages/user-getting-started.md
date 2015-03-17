@@ -40,6 +40,12 @@ The Flannel-Docker charm will be in varying states in the master branch of it’
     juju add-relation flannel-docker:network docker:network
 
 
+## Packet Diagram
+
+The flannel networking model can be difficult to grasp at first. Thankfully the folks over at CoreOS have given us a stellar topology map. The following representation is slightly modified from the original - should you wish to see it: [you can do so here](https://github.com/coreos/flannel)
+
+![Flannel Topology Map]({{site.url}}images/flannel-topology.png)
+
 # Known Limitations
 
 ### Local Provider Blockers
