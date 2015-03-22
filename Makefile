@@ -1,6 +1,6 @@
 #!/usr/bin/make
 
-build: virtualenv lint test
+build: virtualenv lint
 
 virtualenv: .venv/bin/python
 .venv/bin/python:
@@ -11,7 +11,6 @@ lint:.venv/bin/python
 	@echo Linting Charm
 	@charm proof
 	@echo Linting Ansible Routines
-	@.venv/bin/ansible-lint playbooks/*
 	@.venv/bin/ansible-playbook -i docs/faux-inventory.conf --syntax-check playbooks/site.yaml
 
 clean:
