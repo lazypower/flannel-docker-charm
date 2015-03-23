@@ -9,39 +9,39 @@ seconds = 900
 
 
 class TestDeployment(unittest.TestCase):
-    """ 
+    """
     Create a unit test style class for this amulet test.
     """
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
         """
         The setup method runs once after the class is created.
         """
-        self.deployment = amulet.Deployment(series='trusty')
+        cls.deployment = amulet.Deployment(series='trusty')
 
-        self.deployment.add('docker', 'local:trusty/docker')
-        self.deployment.add('flannel-docker')
-        self.deployment.add('etcd', 'cs:~hazmat/trusty/etcd')
+        cls.deployment.add('docker', 'cs:trusty/docker')
+        cls.deployment.add('flannel-docker')
+        cls.deployment.add('etcd', 'cs:~hazmat/trusty/etcd')
 
-        self.deployment.configure('docker', {})
-        self.deployment.configure('etcd', {})
-        self.deployment.configure('flannel-docker', {})
+        cls.deployment.configure('docker', {})
+        cls.deployment.configure('etcd', {})
+        cls.deployment.configure('flannel-docker', {})
 
-        self.deployment.relate('flannel-docker:docker-host', 'docker:juju-info')
-        self.deployment.relate('flannel-docker:network', 'docker:network')
-        self.deployment.relate('flannel-docker:db', 'etcd:client')
+        cls.deployment.relate('flannel-docker:docker-host', 'docker:juju-info')
+        cls.deployment.relate('flannel-docker:network', 'docker:network')
+        cls.deployment.relate('flannel-docker:db', 'etcd:client')
 
         try:
-            self.deployment.setup(timeout=seconds)
-            self.deployment.sentry.wait()
+            cls.deployment.setup(timeout=seconds)
+            cls.deployment.sentry.wait()
         except amulet.helpers.TimeoutError:
             msg = "The environment was not set up in %d seconds." % seconds
             amulet.raise_status(amulet.FAIL, msg)
         except:
             raise
 
-        self.docker_unit = self.deployment.sentry.unit['docker/0']
-        self.etcd_unit = self.deployment.sentry.unit['etcd/0']
+        cls.docker_unit = cls.deployment.sentry.unit['docker/0']
+        cls.etcd_unit = cls.deployment.sentry.unit['etcd/0']
 
     def test_flannel_binary(self):
         """ Test to see if flannel is installed correctly. """
@@ -53,7 +53,6 @@ class TestDeployment(unittest.TestCase):
             message = 'The flannel binary is not installed.'
             amulet.raise_status(amulet.FAIL, msg=message)
 
-
     def test_flannel_running(self):
         """ Test to see if flannel is running correctly. """
         command = 'sudo service flannel status'
@@ -63,7 +62,6 @@ class TestDeployment(unittest.TestCase):
         if code != 0:
             message = 'The flannel process is not in correct status.'
             amulet.raise_status(amulet.FAIL, msg=message)
-
 
     def test_flannel_config(self):
         """ Test the flannel configuration. """
