@@ -28,8 +28,8 @@ class TestDeployment(unittest.TestCase):
         cls.deployment.configure('flannel-docker', {})
 
         cls.deployment.relate('flannel-docker:docker-host', 'docker:juju-info')
-        cls.deployment.relate('flannel-docker:network', 'docker:network')
         cls.deployment.relate('flannel-docker:db', 'etcd:client')
+        cls.deployment.relate('flannel-docker:network', 'docker:network')
 
         try:
             cls.deployment.setup(timeout=seconds)
