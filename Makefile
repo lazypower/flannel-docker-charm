@@ -11,7 +11,6 @@ lint:.venv/bin/python
 	@echo Linting Charm
 	@charm proof
 	@echo Linting Ansible Routines
-	@.venv/bin/ansible-playbook -i docs/faux-inventory.conf --syntax-check playbooks/site.yaml
 
 clean:
 	rm -rf .venv
