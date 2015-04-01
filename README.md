@@ -33,8 +33,8 @@ Deploy the docker charm, and flannel-docker. Then relate docker to flannel-docke
     juju deploy local:trusty/docker
     juju deploy local:trusty/flannel-docker
     juju add-relation flannel-docker:docker-host docker:juju-info
-    juju add-relation flannel-docker:network docker:network
     juju add-relation flannel-docker:db etcd:client
+    juju add-relation flannel-docker:network docker:network
 
 ## Known Limitations
 
