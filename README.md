@@ -30,8 +30,8 @@ Start by deploying ETCD to your bootstrap node (this is for cost reduction, its 
 Deploy the docker charm, and flannel-docker. Then relate docker to flannel-docker, and flannel-docker to etcd. The networking magic will reconfigure the network as a mesh overlay.
 
     juju deploy cs:~kubernetes/trusty/etcd --to 0
-    juju deploy local:trusty/docker
-    juju deploy local:trusty/flannel-docker
+    juju deploy trusty/docker
+    juju deploy trusty/flannel-docker
     juju add-relation flannel-docker:docker-host docker:juju-info
     juju add-relation flannel-docker:db etcd:client
     juju add-relation flannel-docker:network docker:network
