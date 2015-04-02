@@ -21,7 +21,7 @@ class TestDeployment(unittest.TestCase):
 
         cls.deployment.add('docker', 'cs:trusty/docker')
         cls.deployment.add('flannel-docker')
-        cls.deployment.add('etcd', 'cs:~hazmat/trusty/etcd')
+        cls.deployment.add('etcd', 'cs:~kubernetes/trusty/etcd')
 
         cls.deployment.configure('docker', {})
         cls.deployment.configure('etcd', {})
