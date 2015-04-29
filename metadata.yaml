@@ -18,9 +18,9 @@ provides:
 requires:
   db:
     interface: etcd
+  host:
+    interface: juju-info
+    scope: container
   docker-host:
     interface: juju-info
     scope: container
-peers:
-  overlay:
-    interface: flannel-mesh
