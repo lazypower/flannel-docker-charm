@@ -5,8 +5,19 @@
       apt: pkg={{ item }} state=latest update_cache=yes
       with_items:
           - bridge-utils
+          - golang-go
 
-    - name: Unpack the flannel binary
-      unarchive: src={{ charm_dir }}/files/flannel.amd64.tar.gz
-                 dest=/usr/local/bin
-                 creates=/usr/local/bin/flannel mode= 0755
+
+    - name: Fetch Flannel project code
+      git: repo=https://github.com/coreos/flannel.git dest=/opt/flannel version=v0.4.0
+
+
+    - name: build flannel binary
+      command: /opt/flannel/build
+      args:
+          chdir: /opt/flannel
+
+    - name: place flannel binary
+      copy: src=/opt/flannel/bin/flanneld dest=/usr/local/bin/flanneld mode=0755 
+
+
