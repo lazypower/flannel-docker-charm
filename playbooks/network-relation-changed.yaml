@@ -3,10 +3,6 @@
 # Note: this is necessary when being called from
 # network-relation-changed, not from db-relation-joined.
 
-- name: Find Docker-Host network relation-id
-  shell: relation-ids network
-  register: docker_host_rel_id
-
 # Read data from flannel config
 - name: Read Flannel Subnet
   shell: cat /run/flannel/subnet.env | grep FLANNEL_SUBNET | cut -f2 -d"="
@@ -17,11 +13,10 @@
   register: flannel_mtu
 
 - set_fact:
-    host_rel_id: "{{ docker_host_rel_id.stdout }}"
     flannel_mtu: "{{ flannel_mtu.stdout }}"
     flannel_subnet: "{{ flannel_subnet.stdout }}"
+    scoped_network: "{{ relations.network[0].__relid__ | default('') }}"
 
 - name: Send Data to Docker Host for bridge configuration
-  shell: relation-set -r {{ host_rel_id }} flannel-subnet={{ flannel_subnet  }} flannel-mtu={{ flannel_mtu }} overlay_type=udp
-  when: host_rel_id != ""
-  ignore_errors: yes
+  shell: relation-set -r {{ scoped_network }} flannel-subnet={{ flannel_subnet  }} flannel-mtu={{ flannel_mtu }} overlay_type=udp
+  when: scoped_network != ""
