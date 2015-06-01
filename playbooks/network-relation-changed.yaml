@@ -15,7 +15,11 @@
 - set_fact:
     flannel_mtu: "{{ flannel_mtu.stdout }}"
     flannel_subnet: "{{ flannel_subnet.stdout }}"
+    scoped_network: ""
+
+- set_fact:
     scoped_network: "{{ relations.network[0].__relid__ | default('') }}"
+  when: "{{ relations.network | length }} > 0"
 
 - name: Send Data to Docker Host for bridge configuration
   shell: relation-set -r {{ scoped_network }} flannel-subnet={{ flannel_subnet  }} flannel-mtu={{ flannel_mtu }} overlay_type=udp
