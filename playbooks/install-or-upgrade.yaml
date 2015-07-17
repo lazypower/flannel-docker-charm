@@ -9,4 +9,4 @@
     - name: Unpack the flannel binary
       unarchive: src={{ charm_dir }}/files/flannel.amd64.tar.gz
                  dest=/usr/local/bin
-                 creates=/usr/local/bin/flannel mode= 0755
+                 creates=/usr/local/bin/flannel mode=0755
