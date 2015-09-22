@@ -1,18 +1,23 @@
 #!/usr/bin/make
 
-build: virtualenv lint
 
-virtualenv: .venv/bin/python
-.venv/bin/python:
+build: tox lint test
+
+virtualenv:
 	virtualenv .venv
-	.venv/bin/pip install nose flake8 mock pyyaml charmhelpers ansible-lint ansible
 
-lint:.venv/bin/python
-	@echo Linting Charm
-	@charm proof
-	@echo Linting Ansible Routines
-	@.venv/bin/ansible-lint playbooks/*
+tox:
+/usr/bin/tox:
+	sudo apt-get install -y  python-tox python-dev python-virtualenv
+
+lint: /usr/bin/tox
+	tox -e lint
+
+
+unit_test: /usr/bin/tox
+	@# tox
+	@echo "Unit tests pending"
 
 clean:
-	rm -rf .venv
+	rm -rf .venv .tox
 	find -name *.pyc -delete
