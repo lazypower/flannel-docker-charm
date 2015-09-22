@@ -1,5 +1,7 @@
 # Flannel (Docker Flavored)
 
+[![Build Status](http://drone.systemzoo.org/api/badge/github.com/chuckbutler/flannel-docker-charm/status.svg?branch=master)](http://drone.systemzoo.org/github.com/chuckbutler/flannel-docker-charm)
+
 ### About Flannel
 [Flannel](https://github.com/coreos/flannel) (originally rudder) is an overlay
 network that gives a subnet to each machine for use with containers.
