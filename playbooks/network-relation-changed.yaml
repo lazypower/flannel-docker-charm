@@ -12,10 +12,14 @@
   shell: cat /run/flannel/subnet.env | grep FLANNEL_MTU | cut -f2 -d"="
   register: flannel_mtu
 
+- name: Read network relation
+  shell: "{{ charm_dir }}/scripts/parse_relation.py"
+  register: network_id
+
 - set_fact:
     flannel_mtu: "{{ flannel_mtu.stdout }}"
     flannel_subnet: "{{ flannel_subnet.stdout }}"
-    scoped_network: "{{ relations.network[0].__relid__ | default('') }}"
+    scoped_network: "{{ network_id.stdout | default('') }}"
 
 - name: Send Data to Docker Host for bridge configuration
   shell: relation-set -r {{ scoped_network }} flannel-subnet={{ flannel_subnet  }} flannel-mtu={{ flannel_mtu }} overlay_type=udp
